@@ -169,17 +169,6 @@ Full list with pinned versions in [`requirements.txt`](requirements.txt).
 
 ---
 
-## 🗺️ Roadmap
-
-- [ ] Password strength analyzer with entropy scoring
-- [ ] Import from Bitwarden / 1Password / LastPass (CSV)
-- [ ] TOTP / 2FA code generation built-in
-- [ ] Vault export with encrypted backup format
-- [ ] Linux & macOS support (platform-native UI fallback)
-- [ ] Auto-lock on idle timeout
-
----
-
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE) for details.
