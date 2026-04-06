@@ -1,0 +1,39 @@
+name: Gitleaks Security Scan
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: "0 3 * * *"   # daily scan
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  gitleaks:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout full history
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2. Run Gitleaks scan
+      - name: Run Gitleaks
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/repo \
+            ghcr.io/gitleaks/gitleaks:latest detect \
+            --source=/repo \
+            --report-format sarif \
+            --report-path=/repo/gitleaks-report.sarif \
+            --redact
+
+      # 3. Upload SARIF report
+      - name: Upload SARIF report
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: gitleaks-report.sarif
